@@ -28,7 +28,6 @@ dist_bin_SCRIPTS = bzgrep bzmore bzdiff
 
 dist_man_MANS = bzip2.1 bzgrep.1 bzmore.1 bzdiff.1
 
-pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = bzip2.pc
 
 $(pkgconfig_DATA): $(srcdir)/bzip2.pc.in config.status
