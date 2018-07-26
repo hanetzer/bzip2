@@ -1,7 +1,7 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.57])
+AC_PREREQ([2.69])
 AC_INIT([bzip2], [1.0.6-r10], [Julian Seward <jseward@bzip.org>])
 BZIP2_LT_CURRENT=1
 BZIP2_LT_REVISION=6
@@ -10,7 +10,6 @@ AC_CONFIG_SRCDIR([bzlib.h])
 AC_CONFIG_MACRO_DIR([m4])
 
 AM_INIT_AUTOMAKE
-AM_MAINTAINER_MODE
 
 # Checks for programs.
 AC_PROG_AWK
@@ -18,8 +17,9 @@ AC_PROG_CC
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
-AC_PROG_LIBTOOL
-PKG_PROG_PKG_CONFIG
+LT_INIT
+AX_REQUIRE_DEFINED([PKG_INSTALLDIR])
+PKG_INSTALLDIR
 
 # Checks for libraries.
 
@@ -30,35 +30,11 @@ PKG_PROG_PKG_CONFIG
 # Check for system features.
 AC_SYS_LARGEFILE
 
-AC_MSG_CHECKING([whether compiler understands -Wall])
-save_CFLAGS="$CFLAGS"
-CFLAGS="$CFLAGS -Wall"
-AC_TRY_COMPILE([], [], [
-	AC_MSG_RESULT([yes])
-], [
-	AC_MSG_RESULT([no])
-	CFLAGS="$save_CFLAGS"
-])
+AX_APPEND_COMPILE_FLAGS([-Wall], [CFLAGS])
 
-AC_MSG_CHECKING([whether compiler understands -Winline])
-save_CFLAGS="$CFLAGS"
-CFLAGS="$CFLAGS -Winline"
-AC_TRY_COMPILE([], [], [
-	AC_MSG_RESULT([yes])
-], [
-	AC_MSG_RESULT([no])
-	CFLAGS="$save_CFLAGS"
-])
+AX_APPEND_COMPILE_FLAGS([-Winline], [CFLAGS])
 
-AC_MSG_CHECKING([whether compiler understands -fno-strength-reduce])
-save_CFLAGS="$CFLAGS"
-CFLAGS="$CFLAGS -fno-strength-reduce"
-AC_TRY_COMPILE([], [], [
-	AC_MSG_RESULT([yes])
-], [
-	AC_MSG_RESULT([no])
-	CFLAGS="$save_CFLAGS"
-])
+AX_APPEND_COMPILE_FLAGS([-Wfno-strength-reduce], [CFLAGS])
 
 # Checks for library functions.
 

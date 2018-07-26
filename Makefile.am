@@ -7,15 +7,14 @@ libbz2_la_SOURCES = \
 	randtable.c \
 	compress.c \
 	decompress.c \
-	bzlib.c
+	bzlib.c \
+	bzlib_private.h
 
 libbz2_la_LDFLAGS = \
 	-version-info $(BZIP2_LT_CURRENT):$(BZIP2_LT_REVISION):$(BZIP2_LT_AGE) \
 	-no-undefined
 
 include_HEADERS = bzlib.h
-
-noinst_HEADERS = bzlib_private.h
 
 bin_PROGRAMS = bzip2 bzip2recover
 
@@ -25,9 +24,9 @@ bzip2_LDADD = libbz2.la
 bzip2recover_SOURCES = bzip2recover.c
 bzip2recover_LDADD = libbz2.la
 
-bin_SCRIPTS = bzgrep bzmore bzdiff
+dist_bin_SCRIPTS = bzgrep bzmore bzdiff
 
-man_MANS = bzip2.1 bzgrep.1 bzmore.1 bzdiff.1
+dist_man_MANS = bzip2.1 bzgrep.1 bzmore.1 bzdiff.1
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = bzip2.pc
@@ -89,17 +88,15 @@ test: bzip2
 manual: $(srcdir)/manual.html $(srcdir)/manual.ps $(srcdir)/manual.pdf
 
 manual.ps: $(MANUAL_SRCS)
-	cd $(srcdir); ./xmlproc.sh -ps manual.xml
+	cd $(srcdir) && ./xmlproc.sh -ps manual.xml
 
 manual.pdf: $(MANUAL_SRCS)
-	cd $(srcdir); ./xmlproc.sh -pdf manual.xml
+	cd $(srcdir) && ./xmlproc.sh -pdf manual.xml
 
 manual.html: $(MANUAL_SRCS)
-	cd $(srcdir); ./xmlproc.sh -html manual.xml
+	cd $(srcdir) && ./xmlproc.sh -html manual.xml
 
 EXTRA_DIST = \
-	$(bin_SCRIPTS) \
-	$(man_MANS) \
 	README.autotools \
 	README.XML.STUFF \
 	bz-common.xsl \
