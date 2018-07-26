@@ -37,6 +37,10 @@
 /*-- General stuff. --*/
 
 #define BZ_VERSION  "1.0.6, 6-Sept-2010"
+#define BZ_VER_FULL "1.0.6"
+#define BZ_VER_MAJOR 1
+#define BZ_VER_MINOR 0
+#define BZ_VER_REVISION 6
 
 typedef char            Char;
 typedef unsigned char   Bool;

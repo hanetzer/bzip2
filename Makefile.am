@@ -1,5 +1,9 @@
 lib_LTLIBRARIES = libbz2.la
 
+if USE_VERSION_RC
+LIBBZ2_RC = libbz2.rc
+endif
+
 libbz2_la_SOURCES = \
 	blocksort.c \
 	huffman.c \
@@ -8,7 +12,7 @@ libbz2_la_SOURCES = \
 	compress.c \
 	decompress.c \
 	bzlib.c \
-	bzlib_private.h
+	bzlib_private.h $(LIBBZ2_RC)
 
 libbz2_la_LDFLAGS = \
 	-version-info $(BZIP2_LT_CURRENT):$(BZIP2_LT_REVISION):$(BZIP2_LT_AGE) \
@@ -36,6 +40,12 @@ dist_man_MANS = bzip2.1 bzgrep.1 bzmore.1 bzdiff.1
 pkgconfig_DATA = bzip2.pc
 
 $(pkgconfig_DATA): $(srcdir)/bzip2.pc.in config.status
+
+.rc.lo:
+	$(LIBTOOL) --tag=RC --mode=compile $(WINDRES) -DGCC_WINDRES $< -o $@
+
+%.lo : %.rc
+	$(LIBTOOL) --tag=RC --mode=compile $(WINDRES) -DGCC_WINDRES $< -o $@
 
 install-exec-hook:
 	rm -f $(DESTDIR)$(bindir)/`echo "bunzip2" | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`

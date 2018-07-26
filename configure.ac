@@ -20,6 +20,7 @@ AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AM_PROG_AR
 LT_INIT
+LT_LANG([Windows Resource])
 AX_REQUIRE_DEFINED([PKG_INSTALLDIR])
 PKG_INSTALLDIR
 
@@ -39,6 +40,16 @@ AX_APPEND_COMPILE_FLAGS([-Winline], [CFLAGS])
 AX_APPEND_COMPILE_FLAGS([-Wfno-strength-reduce], [CFLAGS])
 
 # Checks for library functions.
+
+# Check for windows specific needs
+AS_CASE([x$host],
+	[x*-*-cygwin*|x*-*-mingw*], [
+	AC_CHECK_PROGS([WINDRES], [windres $host-windres])
+	use_version_rc=true
+	]
+)
+
+AM_CONDITIONAL(USE_VERSION_RC, test x$use_version_rc = xtrue)
 
 # Handle static bzip2/bzip2recover logic
 AC_ARG_ENABLE([static-bzip2],
