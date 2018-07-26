@@ -16,13 +16,18 @@ libbz2_la_LDFLAGS = \
 
 include_HEADERS = bzlib.h
 
+if STATIC_BZIP2
+STATIC_FLAGS = -all-static
+endif
 bin_PROGRAMS = bzip2 bzip2recover
 
 bzip2_SOURCES = bzip2.c
 bzip2_LDADD = libbz2.la
+bzip2_LDFLAGS = $(STATIC_FLAGS)
 
 bzip2recover_SOURCES = bzip2recover.c
 bzip2recover_LDADD = libbz2.la
+bzip2recover_LDFLAGS = $(STATIC_FLAGS)
 
 dist_bin_SCRIPTS = bzgrep bzmore bzdiff
 

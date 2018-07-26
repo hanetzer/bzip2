@@ -40,6 +40,12 @@ AX_APPEND_COMPILE_FLAGS([-Wfno-strength-reduce], [CFLAGS])
 
 # Checks for library functions.
 
+# Handle static bzip2/bzip2recover logic
+AC_ARG_ENABLE([static-bzip2],
+	AS_HELP_STRING([--enable-static-bzip2], [build bzip2/bzip2recover statically [default=no]]),
+	[],[enable_static_bzip2=yes])
+AM_CONDITIONAL(STATIC_BZIP2, test x$enable_static_bzip2 = xyes)
+
 # Write the output.
 AC_SUBST([BZIP2_LT_CURRENT])
 AC_SUBST([BZIP2_LT_REVISION])
