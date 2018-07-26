@@ -9,7 +9,7 @@ BZIP2_LT_AGE=0
 AC_CONFIG_SRCDIR([bzlib.h])
 AC_CONFIG_MACRO_DIR([m4])
 
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([1.15 foreign subdir-objects -Wall])
 
 # Checks for programs.
 AC_PROG_AWK
